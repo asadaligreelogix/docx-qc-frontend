@@ -9,7 +9,7 @@ export interface FileCheckResponse {
 export interface QCReportSchema {
   document_path: string;
   timestamp: string;
-  summary: Record<string, any>;
+  summary: Record<string, unknown>;
   checks: QCResultSchema[];
 }
 
@@ -20,7 +20,7 @@ export interface QCResultSchema {
   message: string;
   violation_type: string;
   details?: string | null;
-  locations?: Record<string, any>[] | null;
+  locations?: Record<string, unknown>[] | null;
 }
 
 export interface HealthResponse {

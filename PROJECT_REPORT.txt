@@ -1,0 +1,54 @@
+DOCX QC Tool – Project Fixes & Improvements Report
+===============================================
+
+Frontend (docx-qc-frontend-main)
+--------------------------------
+1. API Connectivity & Environment Variables
+   - Refactored API config to use NEXT_PUBLIC_API_URL for backend switching.
+   - Documented .env.local and .env.production usage.
+2. File Upload Functionality
+   - Verified file upload form sends .docx files to backend /check endpoint.
+   - Ensured results are displayed in a user-friendly table.
+3. TypeScript & ESLint Compliance
+   - Removed unused imports and all 'any' usages in types.
+   - Added custom type for error details and used type guards.
+   - Resolved all TypeScript and ESLint errors; production build passes.
+4. Error Handling & Robustness
+   - Improved error handling with axios.isAxiosError and type guards.
+   - User-friendly error messages for all failure cases.
+5. Documentation
+   - Added JSDoc and inline comments.
+   - Updated README for environment setup, running, and deployment.
+
+Backend (docx-qc-main)
+----------------------
+1. CORS Configuration
+   - Verified CORS middleware is enabled (allow_origins=["*"]).
+   - Noted to restrict origins in production for security.
+2. API Endpoints
+   - Checked /check and /api/check endpoints for correct file handling and QC checks.
+   - Confirmed /api/health endpoint for health checks.
+3. Error Handling
+   - Reviewed custom error handlers for consistent API responses.
+4. Type Safety & Documentation
+   - Checked Pydantic schemas for request/response validation.
+   - Ensured endpoints are documented with docstrings.
+
+Build & Deployment
+------------------
+- Successfully built frontend for production with no errors.
+- Provided deployment guides (see DEPLOY.txt in each project).
+
+Summary Table
+-------------
+| Area                | Issue/Task                          | Status         |
+|---------------------|-------------------------------------|----------------|
+| API URL Config      | Use env variable for backend URL    | ✅ Fixed       |
+| File Upload         | Ensure correct POST & display       | ✅ Verified    |
+| TypeScript/ESLint   | Remove 'any', fix errors            | ✅ Fixed       |
+| Error Handling      | Robust, user-friendly errors        | ✅ Improved    |
+| CORS (Backend)      | Allow frontend requests             | ✅ Verified    |
+| API Docs            | Endpoint docs, README, comments     | ✅ Improved    |
+| Build/Deploy        | Production build, env setup         | ✅ Success     |
+
+For deployment or future maintenance, see DEPLOY.txt in each project folder. 

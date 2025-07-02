@@ -1,0 +1,35 @@
+DOCX QC Frontend Deployment Guide
+================================
+
+1. Environment Variables
+------------------------
+- Create a file named `.env.local` in the project root (for local development):
+  NEXT_PUBLIC_API_URL=http://localhost:8000
+- For production (e.g., Vercel), set `NEXT_PUBLIC_API_URL` in the Vercel dashboard to your backend URL (e.g., https://your-backend.onrender.com).
+
+2. Local Development
+---------------------
+- Install dependencies:
+  npm install
+- Start the development server:
+  npm run dev
+- The app will use the backend URL from `NEXT_PUBLIC_API_URL`.
+
+3. Production Build (Local)
+---------------------------
+- Build the app:
+  npm run build
+- Start the production server:
+  npm start
+
+4. Deploying to Vercel
+----------------------
+- Push your code to GitHub.
+- Import the repo in Vercel.
+- Set `NEXT_PUBLIC_API_URL` in Vercel project settings.
+- Deploy!
+
+5. Notes
+--------
+- The frontend will POST .docx files to `${NEXT_PUBLIC_API_URL}/check`.
+- Ensure the backend is running and accessible from the frontend. 

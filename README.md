@@ -10,21 +10,38 @@ A modern Next.js 14 (App Router, TypeScript, Tailwind CSS) frontend for the DOCX
 - Dark mode support
 - Toast notifications, loading states, error handling
 
-## Setup
+## Environment Variables
 
-1. **Install dependencies:**
-   ```bash
+To connect the frontend to the backend API, set the environment variable `NEXT_PUBLIC_API_URL`.
+
+- For local development, create a `.env.local` file in the project root:
+  
+  ```env
+  NEXT_PUBLIC_API_URL=http://localhost:8000
+  ```
+
+- For production (e.g., Vercel), set `NEXT_PUBLIC_API_URL` to your Render backend URL in the Vercel dashboard or in `.env.production`:
+  
+  ```env
+  NEXT_PUBLIC_API_URL=https://your-backend.onrender.com
+  ```
+
+## Running Locally
+
+1. Install dependencies:
+   ```sh
    npm install
    ```
-2. **Configure backend URL:**
-   - Edit `.env.local` (already created):
-     ```
-     NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
-     ```
-3. **Run the app:**
-   ```bash
+2. Start the development server:
+   ```sh
    npm run dev
    ```
+3. The app will use the backend URL from `NEXT_PUBLIC_API_URL`.
+
+## Deployment
+
+- Ensure `NEXT_PUBLIC_API_URL` is set in your Vercel project settings to point to your production backend.
+- The frontend will automatically use this value for all API requests.
 
 ## Folder Structure
 - `src/app/` — App Router pages

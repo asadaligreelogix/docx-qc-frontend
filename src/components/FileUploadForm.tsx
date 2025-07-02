@@ -1,10 +1,15 @@
 "use client";
 import { useRef, useState } from "react";
 import api from "@/lib/api";
-import { FileCheckResponse, HTTPValidationError } from "@/types/api";
+import { FileCheckResponse } from "@/types/api";
 import LoadingSpinner from "./LoadingSpinner";
 import Toast from "./Toast";
+import axios from "axios";
 
+/**
+ * FileUploadForm component allows users to upload a .docx file,
+ * sends it to the backend for QC, and displays the results.
+ */
 export default function FileUploadForm() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -13,6 +18,13 @@ export default function FileUploadForm() {
   const [success, setSuccess] = useState<string | null>(null);
   const [result, setResult] = useState<FileCheckResponse | null>(null);
 
+  // Add this type for error details
+  type ValidationDetail = { msg: string };
+
+  /**
+   * Handles file input change event.
+   * Resets previous results and errors.
+   */
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFile(e.target.files?.[0] || null);
     setResult(null);
@@ -20,6 +32,9 @@ export default function FileUploadForm() {
     setSuccess(null);
   };
 
+  /**
+   * Handles form submission: uploads the file to the backend and processes the response.
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -42,9 +57,25 @@ export default function FileUploadForm() {
       });
       setResult(res.data);
       setSuccess("File checked successfully!");
-    } catch (err: any) {
-      if (err.response?.data?.detail) {
-        setError(err.response.data.detail.map((d: any) => d.msg).join(", "));
+    } catch (err) {
+      // Type guard for AxiosError
+      if (axios.isAxiosError(err)) {
+        const data = err.response?.data as unknown;
+        let detail: unknown = undefined;
+        if (typeof data === 'object' && data !== null && 'detail' in data) {
+          detail = (data as { detail: unknown }).detail;
+        }
+        if (detail) {
+          if (Array.isArray(detail)) {
+            setError((detail as ValidationDetail[]).map((d) => d.msg).join(", "));
+          } else if (typeof detail === "string") {
+            setError(detail);
+          } else {
+            setError("Failed to check file. Please try again.");
+          }
+        } else {
+          setError("Failed to check file. Please try again.");
+        }
       } else {
         setError("Failed to check file. Please try again.");
       }
