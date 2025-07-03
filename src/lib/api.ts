@@ -6,7 +6,7 @@ import axios from 'axios';
  * Falls back to localhost:8000 if not set (for local development).
  */
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://0.0.0.0:8001",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://docx-qc.onrender.com",
 });
 
 export default api;
